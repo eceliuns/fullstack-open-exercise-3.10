@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 app.use(express.json());
+app.use(express.static("dist"));
 
 const cors = require("cors");
 app.use(cors());
@@ -69,7 +70,7 @@ const generateId = () => {
 };
 
 app.post("/api/persons", (request, response) => {
-  console.log("POST body:", request.body);
+  const body = request.body;
   if (!body.name && !body.number) {
     return response.status(400).json({ error: "name and number missing" });
   }
