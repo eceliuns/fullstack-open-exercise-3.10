@@ -74,23 +74,11 @@ app.delete("/api/persons/:id", (request, response, next) => {
 
 app.post("/api/persons", (request, response, next) => {
   const body = request.body;
-  if (!body.name && !body.number) {
-    const error = new Error("name and number missing");
-    error.name = "ValidationError";
-    return next(error);
-  }
-
-  if (!body.name) {
-    const error = new Error("name missing");
-    error.name = "ValidationError";
-    return next(error);
-  }
-
-  if (!body.number) {
-    const error = new Error("number missing");
-    error.name = "ValidationError";
-    return next(error);
-  }
+  // if (!body.name && !body.number) {
+  //   const error = new Error("Name and number missing");
+  //   error.name = "ValidationError";
+  //   return next(error);
+  // }
 
   const person = new Person({
     name: body.name,
@@ -137,10 +125,6 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === "NotFound") {
     return response.status(404).json({ error: error.message });
-  }
-
-  if (error.name === "ValidationError") {
-    return response.status(400).json({ error: error.message });
   }
 
   next(error);
